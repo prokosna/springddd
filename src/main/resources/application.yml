@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mysql
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      username: root
+      password: password
+      minimum-idle: 20
+      maximum-pool-size: 30
+      idle-timeout: 5000
+  cache:
+    ehcache:
+      config: ehcache3.xml
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
