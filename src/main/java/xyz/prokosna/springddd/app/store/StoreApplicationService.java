@@ -1,7 +1,6 @@
 package xyz.prokosna.springddd.app.store;
 
 import com.codahale.metrics.annotation.Metered;
-import com.codahale.metrics.annotation.Timed;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,15 +8,13 @@ import xyz.prokosna.springddd.domain.model.store.Author;
 import xyz.prokosna.springddd.domain.model.store.Book;
 import xyz.prokosna.springddd.domain.model.store.BookDetailed;
 import xyz.prokosna.springddd.domain.model.store.Publisher;
-import xyz.prokosna.springddd.domain.repository.store.AuthorRepository;
-import xyz.prokosna.springddd.domain.repository.store.BookRepository;
-import xyz.prokosna.springddd.domain.repository.store.PublisherRepository;
-import xyz.prokosna.springddd.domain.repository.store.StoreMybatisRepository;
+import xyz.prokosna.springddd.domain.repository.store.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,16 +23,19 @@ public class StoreApplicationService {
 
   private final AuthorRepository authorRepository;
   private final BookRepository bookRepository;
+  private final BookFooRepository bookFooRepository;
   private final PublisherRepository publisherRepository;
   private final StoreMybatisRepository storeMybatisRepository;
 
   public StoreApplicationService(
       AuthorRepository authorRepository,
       BookRepository bookRepository,
+      BookFooRepository bookFooRepository,
       PublisherRepository publisherRepository,
       StoreMybatisRepository storeMybatisRepository) {
     this.authorRepository = authorRepository;
     this.bookRepository = bookRepository;
+    this.bookFooRepository = bookFooRepository;
     this.publisherRepository = publisherRepository;
     this.storeMybatisRepository = storeMybatisRepository;
   }
@@ -89,7 +89,12 @@ public class StoreApplicationService {
 
   @Metered
   public List<BookDetailed> getAllDetailedBooks() {
-    // return storeMybatisRepository.findAll();
-    return bookRepository.findAllDetailedBooks();
+    return storeMybatisRepository.findAll();
+    // return bookRepository.findAllDetailedBooks();
+  }
+
+  @Transactional(readOnly = true)
+  public Book getBook(String id) {
+    return bookFooRepository.findById(id);
   }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.prokosna.springddd.domain.repository.store.StoreMybatisRepository">
+    <select id="findAll" resultType="xyz.prokosna.springddd.domain.model.store.BookDetailed">
+        SELECT
+            a.id    AS id,
+            a.isdn  AS isdn,
+            a.title AS title,
+            b.name  AS author_name,
+            c.id    AS publisher_id
+        FROM books a
+            LEFT JOIN authors b ON a.author_id = b.author_id
+            LEFT JOIN publishers c ON a.publisher_name = c.name
+    </select>
+</mapper>

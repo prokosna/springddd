@@ -1,10 +1,7 @@
 package xyz.prokosna.springddd.infra.rest.store;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.prokosna.springddd.app.store.StoreApplicationService;
 import xyz.prokosna.springddd.domain.model.store.Author;
 import xyz.prokosna.springddd.domain.model.store.Book;
@@ -53,5 +50,10 @@ public class StoreResource {
   @GetMapping("/all")
   public List<BookDetailed> getAllDetailedBooks() {
     return this.storeApplicationService.getAllDetailedBooks();
+  }
+
+  @GetMapping("/book/{id}")
+  public Book getBookById(@PathVariable("id") String id) {
+    return this.storeApplicationService.getBook(id);
   }
 }
